@@ -1,0 +1,12 @@
+.photos__card {
+    background-color: white;
+    width: 282px;
+    border-radius: 15px;
+    position: relative;
+}
+
+@media all and (max-width: 950px) {
+    .photos__card {
+        justify-self: center;
+    }
+}

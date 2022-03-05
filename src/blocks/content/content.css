@@ -1,0 +1,11 @@
+.content {
+    width: 95%;
+    max-width: 880px;
+    margin: 40px auto 66px;
+}
+
+@media all and (max-width: 740px) {
+    .content {
+        margin: 38px auto 48px;
+    }
+}
