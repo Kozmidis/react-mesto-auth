@@ -3,7 +3,7 @@ import failImage from "../images/error.svg";
 
 export default function InfoTooltip({
   isOpen,
-  isRegister,
+  status,
   handleClickClose,
   onClose,
 }) {
@@ -15,10 +15,10 @@ export default function InfoTooltip({
       <div className="popup__container popup__alert">
         <img
           className="popup__alert-image"
-          src={isRegister ? successImage : failImage}
+          src={status ? successImage : failImage}
         />
         <div>
-          {isRegister ? (
+          {status ? (
             <p className="popup__form-title">Вы успешно зарегистрировались!</p>
           ) : (
             <p className="popup__form-title">

@@ -12,7 +12,7 @@ export default function PopupWithForm({
 }) {
   return (
     <div
-      className={`popup  ${isOpen ? "popup_opened" : ""}`}
+      className={`popup  ${isOpen && "popup_opened"}`}
       id={name}
       onClick={handleClickClose}
     >

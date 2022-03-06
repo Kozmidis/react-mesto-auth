@@ -21,7 +21,7 @@ function App() {
   const [isAddPopupOpen, setAddPopupOpen] = React.useState(false);
   const [isAlertPopup, setAlertPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
-  const [isRegister, setRegister] = React.useState(false);
+  const [isTooltipStatus, setTooltipStatus] = React.useState();
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   const [currentUser, setCurrentUser] = React.useState({});
@@ -123,6 +123,8 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        setTooltipStatus(false);
+        handleAlertPopup();
       });
   }
 
@@ -133,15 +135,18 @@ function App() {
   }
 
   function handleRegister(email, password) {
-    auth.register(email, password).then((data) => {
-      if (data.ok) {
+    auth
+      .register(email, password)
+      .then(() => {
+        setTooltipStatus(true);
         handleAlertPopup();
-        setRegister(true);
-      } else {
+        history.push("/signin");
+      })
+      .catch((err) => {
+        console.log(err);
+        setTooltipStatus(false);
         handleAlertPopup();
-        setRegister(false);
-      }
-    });
+      });
   }
 
   function handleEditProfileClick() {
@@ -165,6 +170,7 @@ function App() {
   }
 
   function closeAllPopups() {
+    setTooltipStatus();
     setAvatarPopupOpen(false);
     setAddPopupOpen(false);
     setAlertPopupOpen(false);
@@ -179,11 +185,12 @@ function App() {
   }
 
   function handleCheckToken() {
+    const jwt = localStorage.getItem("jwt");
     if (localStorage.getItem("jwt")) {
-      const jwt = localStorage.getItem("jwt");
       // проверяем токен пользователя
-      setLoggedIn(true);
+
       auth.checkToken(jwt).then((user) => {
+        setLoggedIn(true);
         setEmail(user.data.email);
       });
     }
@@ -217,7 +224,7 @@ function App() {
       </Switch>
       <InfoTooltip
         isOpen={isAlertPopup}
-        isRegister={isRegister}
+        status={isTooltipStatus}
         onClose={closeAllPopups}
         handleClickClose={closeOverlayPopup}
       />
